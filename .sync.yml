@@ -6,3 +6,17 @@
 
 spec/spec_helper_acceptance.rb:
   unmanaged: false
+
+Gemfile:
+  optional:
+    ':test':
+      - gem: puppet-lint-legacy_facts-check
+      - gem: puppet-lint-no_erb_template-check
+      - gem: puppet-lint-package_ensure-check
+      - gem: puppet-lint-resource_reference_syntax
+      - gem: puppet-lint-strict_indent-check
+      - gem: puppet-lint-template_file_extension-check
+      - gem: puppet-lint-top_scope_facts-check
+      - gem: puppet-lint-trailing_newline-check
+      - gem: puppet-lint-unquoted_string-check
+      - gem: puppet-lint-variable_contains_upcase
