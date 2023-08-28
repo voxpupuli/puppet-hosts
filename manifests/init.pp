@@ -4,9 +4,12 @@
 #
 # @param default_hosts A hash of hosts entries to manage by default
 #
+# @param purge unmanaged host resources
+#
 class hosts (
   Optional[Hash[String[1], Hash[String[1], Any]]] $hosts = undef,
   Optional[Hash[String[1], Hash[String[1], Any]]] $default_hosts = undef,
+  Boolean $purge = true,
 ) {
   $all_hosts = $hosts ? {
     undef   => $default_hosts,
@@ -18,6 +21,12 @@ class hosts (
       host { $n:
         * => $params,
       }
+    }
+  }
+
+  if $purge {
+    resources { 'host':
+      purge => true,
     }
   }
 }
