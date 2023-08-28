@@ -13,17 +13,16 @@ describe 'hosts class' do
     it_behaves_like 'an idempotent resource'
 
     describe file('/etc/hosts') do
-      %w[
-        127.0.0.1\s+localhost\s+localhost4 localhost4.localdomain4 localhost.localdomain
-        ::1\s+localhost6\s+ip6-localhost ip6-loopback localhost6.localdomain6
-        fe00::0\s+ip6-localnet
-        ff00::0\s+ip6-mcastprefix
-        ff02::1\s+ip6-allnodes
-        ff02::2\s+ip6-allrouters
+      [
+        %r{127.0.0.1\s+localhost\s+localhost4 localhost4.localdomain4 localhost.localdomain},
+        %r{::1\s+localhost6\s+ip6-localhost ip6-loopback localhost6.localdomain6},
+        %r{fe00::0\s+ip6-localnet},
+        %r{ff00::0\s+ip6-mcastprefix},
+        %r{ff02::1\s+ip6-allnodes},
+        %r{ff02::2\s+ip6-allrouters},
+        %r{#{fact('networking.ip')}\s+#{fact('networking.fqdn')}\s+#{fact('networking.hostname')}},
       ].each do |entry|
-        its(:content) do
-          is_expected.to match Regexp.new(entry)
-        end
+        its(:content) { is_expected.to match entry }
       end
       its(:content) { is_expected.not_to match %r{10.10.10.10} }
       its(:content) { is_expected.not_to match %r{foo.example.com} }
@@ -40,20 +39,41 @@ describe 'hosts class' do
     it_behaves_like 'an idempotent resource'
 
     describe file('/etc/hosts') do
-      %w[
-        127.0.0.1\s+localhost\s+localhost4 localhost4.localdomain4 localhost.localdomain
-        ::1\s+localhost6\s+ip6-localhost ip6-loopback localhost6.localdomain6
-        fe00::0\s+ip6-localnet
-        ff00::0\s+ip6-mcastprefix
-        ff02::1\s+ip6-allnodes
-        ff02::2\s+ip6-allrouters
+      [
+        %r{127.0.0.1\s+localhost\s+localhost4 localhost4.localdomain4 localhost.localdomain},
+        %r{::1\s+localhost6\s+ip6-localhost ip6-loopback localhost6.localdomain6},
+        %r{fe00::0\s+ip6-localnet},
+        %r{ff00::0\s+ip6-mcastprefix},
+        %r{ff02::1\s+ip6-allnodes},
+        %r{ff02::2\s+ip6-allrouters},
+        %r{#{fact('networking.ip')}\s+#{fact('networking.fqdn')}\s+#{fact('networking.hostname')}},
       ].each do |entry|
-        its(:content) do
-          is_expected.to match Regexp.new(entry)
-        end
+        its(:content) { is_expected.to match entry }
       end
       its(:content) { is_expected.to match %r{10.10.10.10} }
       its(:content) { is_expected.to match %r{foo.example.com} }
+    end
+  end
+
+  context 'with manage_fqdn => false' do
+    include_examples 'the example', 'no_manage_fqdn.pp'
+
+    it_behaves_like 'an idempotent resource'
+
+    describe file('/etc/hosts') do
+      [
+        %r{127.0.0.1\s+localhost\s+localhost4 localhost4.localdomain4 localhost.localdomain},
+        %r{::1\s+localhost6\s+ip6-localhost ip6-loopback localhost6.localdomain6},
+        %r{fe00::0\s+ip6-localnet},
+        %r{ff00::0\s+ip6-mcastprefix},
+        %r{ff02::1\s+ip6-allnodes},
+        %r{ff02::2\s+ip6-allrouters},
+      ].each do |entry|
+        its(:content) { is_expected.to match entry }
+      end
+      its(:content) do
+        is_expected.not_to match %r{#{fact('networking.ip')}\s+#{fact('networking.fqdn')}\s+#{fact('networking.hostname')}}
+      end
     end
   end
 end

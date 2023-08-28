@@ -6,10 +6,13 @@
 #
 # @param purge unmanaged host resources
 #
+# @param manage_fqdn manage the fqdn entry
+#
 class hosts (
   Optional[Hash[String[1], Hash[String[1], Any]]] $hosts = undef,
   Optional[Hash[String[1], Hash[String[1], Any]]] $default_hosts = undef,
   Boolean $purge = true,
+  Boolean $manage_fqdn = true,
 ) {
   $all_hosts = $hosts ? {
     undef   => $default_hosts,
@@ -27,6 +30,14 @@ class hosts (
   if $purge {
     resources { 'host':
       purge => true,
+    }
+  }
+
+  if $manage_fqdn {
+    host { $facts['networking']['fqdn']:
+      ensure       => present,
+      ip           => $facts['networking']['ip'],
+      host_aliases => $facts['networking']['hostname'],
     }
   }
 }
