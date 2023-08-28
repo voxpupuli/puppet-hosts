@@ -1,0 +1,22 @@
+---
+hosts::default_hosts:
+  localhost:
+    ip: '127.0.0.1'
+    host_aliases:
+      - localhost4
+      - localhost4.localdomain4
+      - localhost.localdomain
+  localhost6:
+    ip: '::1'
+    host_aliases:
+      - ip6-localhost
+      - ip6-loopback
+      - localhost6.localdomain6
+  ip6-localnet:
+    ip: 'fe00::0'
+  ip6-mcastprefix:
+    ip: 'ff00::0'
+  ip6-allnodes:
+    ip: 'ff02::1'
+  ip6-allrouters:
+    ip: 'ff02::2'
