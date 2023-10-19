@@ -1,0 +1,3 @@
+class { 'hosts':
+  purge => false,
+}
