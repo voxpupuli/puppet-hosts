@@ -1,5 +1,5 @@
 class { 'hosts':
-  hosts => {
+  entries => {
     'foo.example.com' => {
       ip           => '10.0.0.1',
       host_aliases => ['foo'],

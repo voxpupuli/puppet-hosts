@@ -1,3 +1,3 @@
 class { 'hosts':
-  default_hosts => {},
+  default_entries => {},
 }

@@ -1,5 +1,5 @@
 ---
-hosts::default_hosts:
+hosts::default_entries:
   localhost:
     ip: '127.0.0.1'
     host_aliases:
