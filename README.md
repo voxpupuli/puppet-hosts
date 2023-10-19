@@ -41,7 +41,7 @@ lookup_options:
   hosts::hosts:
     merge:
       strategy: "deep"
-hosts::hosts:
+hosts::entries:
   foo.example.com:
     ip: '10.0.0.1'
     host_aliases:
