@@ -1,6 +1,6 @@
 {
   "name": "puppet-hosts",
-  "version": "0.1.0",
+  "version": "0.1.1-rc0",
   "author": "Vox Pupuli",
   "summary": "Manage /etc/hosts entries",
   "license": "AGPL-3.0",
