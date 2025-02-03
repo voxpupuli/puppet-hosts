@@ -38,7 +38,7 @@ Creation of hosts entries via hiera:
 
 ```yaml
 lookup_options:
-  hosts::hosts:
+  hosts::entries:
     merge:
       strategy: "deep"
 hosts::entries:
